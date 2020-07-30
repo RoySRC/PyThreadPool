@@ -1,6 +1,3 @@
-# base code adapted from:
-#    https://www.metachris.com/2016/04/python-threadpool
-
 import numpy as np
 from queue import Queue
 from threading import Thread
@@ -95,21 +92,4 @@ class __Worker__(Thread):
                 
             finally:
                 self.task_queue.task_done()
-                
-                
-## Example usage
-if __name__ == "__main__":
 
-    # Function to be executed in a thread
-    def wait_delay():
-        print("This is a function")
-
-    # Instantiate a thread pool with 50 worker threads
-    pool = ThreadPool(50)
-
-    # Add the functions to be executed by the threadpool
-    for _ in range(5):
-        pool.add_task(wait_delay)
-    
-    # This is to prevent the threads from still running in the background
-    pool.kill_all_threads()

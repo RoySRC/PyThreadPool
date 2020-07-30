@@ -1,8 +1,3 @@
-# PyThreadPool
-A thread pool implementation in python
-
-# Usage Example
-```python
 from ThreadPool import ThreadPool
 import time
 
@@ -21,4 +16,3 @@ for _ in range(5):
 
 # This is to prevent the threads from still running in the background
 pool.kill_all_threads()
-```
