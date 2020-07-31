@@ -107,7 +107,6 @@ class __Worker__(Thread):
         it tries to get a task from the task queue
         """
         self._run_ = False
-        self.status[self.index] = False
 
     def run(self):
         while self._run_:
@@ -118,6 +117,8 @@ class __Worker__(Thread):
                 func(*args, **kargs)
 
             except __KillWorkerException__ as _exception_:
+                # indicate to the thread pool that this worker is dead
+                self.status[self.index] = False
                 self.die()
 
             except Exception as _exception_:
@@ -125,3 +126,6 @@ class __Worker__(Thread):
 
             finally:
                 self.task_queue.task_done()
+
+        # Notify the thread pool that this worker is dead
+        self.status[self.index] = False
