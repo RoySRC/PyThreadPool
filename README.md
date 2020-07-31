@@ -3,7 +3,7 @@
 
 
 # PyThreadPool
-A thread pool implementation in python
+A thread pool implementation in python.
 
 # Usage Example
 ```python
