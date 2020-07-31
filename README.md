@@ -1,4 +1,4 @@
-![](https://www.code-inspector.com/project/11708/score/svg)
+![](https://www.code-inspector.com/project/11708/score/svg?branch=master)
 ![](https://www.code-inspector.com/project/11708/status/svg)
 
 # PyThreadPool
