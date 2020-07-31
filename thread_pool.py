@@ -54,8 +54,9 @@ class ThreadPool:
             # send a kill signal to all the alive workers
             for alive_worker in alive_workers:
                 worker = self.workers[alive_worker]
-                worker._run_ = False
+                worker.die()
                 self.add_task(self.__kill__)
+        self.empty_task_queue()
 
 class __KillWorkerException__(Exception):
     """
@@ -75,6 +76,13 @@ class __Worker__(Thread):
         self.status = status
         self.status[self.index] = True
         self.start()
+
+    def die(self):
+        """
+        Make the current worker kill itself the instance
+        it tries to get a task from the task queue
+        """
+        self._run_ = False
 
     def run(self):
         while self._run_:
