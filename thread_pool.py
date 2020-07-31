@@ -30,13 +30,13 @@ class ThreadPool:
         till all the tasks in the queue is done.
         """
         self.task_queue.join()
-    
+
     def __kill__(self):
         """ 
         Kill the worker thread
         """
         raise __KillWorkerException__("Kill")
-    
+
     def kill_all_threads(self, wait=True):
         """ Kill all the threads in the pool """
         # wait for the completion of the current tasks in the pool
@@ -68,7 +68,7 @@ class __Worker__(Thread):
         self.status = status
         self.status[self.index] = True  
         self.start()
-        
+
     def run(self):
         _run_ = True
         while _run_:
