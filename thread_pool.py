@@ -54,7 +54,6 @@ class __KillWorkerException__(Exception):
     """
     Exception to kill worker thread
     """
-    pass
 
 class __Worker__(Thread):
     """
