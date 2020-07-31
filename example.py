@@ -1,5 +1,5 @@
-from thread_pool import ThreadPool
 import threading
+from thread_pool import ThreadPool
 
 # Function to be executed by the thread pool
 def sum_function(*args):
