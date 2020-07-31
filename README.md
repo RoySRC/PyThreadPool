@@ -1,9 +1,13 @@
+![](https://www.code-inspector.com/project/11708/score/svg)
+![](https://www.code-inspector.com/project/11708/status/svg)
+
+
 # PyThreadPool
 A thread pool implementation in python
 
 # Usage Example
 ```python
-from ThreadPool import ThreadPool
+from thread_pool import ThreadPool
 import time
 
 # Function to be executed by the thread pool
