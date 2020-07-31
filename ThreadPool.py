@@ -1,6 +1,7 @@
-import numpy as np
-from queue import Queue
 from threading import Thread
+from queue import Queue
+import numpy as np
+
 
 class ThreadPool:
     """
@@ -81,14 +82,13 @@ class __Worker__(Thread):
             try:
                 func(*args, **kargs)
                 
+            except __KillWorkerException__ as e:
+                # indicate to the thread pool that this worker is dead
+                self.status[self.index] = False
+                _run_ = False
+                    
             except Exception as e:
-                
-                if isinstance(e, __KillWorkerException__):
-                    # indicate to the thread pool that this worker is dead
-                    self.status[self.index] = False
-                    _run_ = False
-                else:
-                    print(e)
+                print(e)
                 
             finally:
                 self.task_queue.task_done()
