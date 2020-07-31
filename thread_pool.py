@@ -119,10 +119,13 @@ class __Worker__(Thread):
             except __KillWorkerException__ as _exception_:
                 # indicate to the thread pool that this worker is dead
                 self.status[self.index] = False
-                self._run_ = False
+                self.die()
 
             except Exception as _exception_:
                 print(_exception_)
 
             finally:
                 self.task_queue.task_done()
+
+        # Notify the thread pool that this worker is dead
+        self.status[self.index] = False
