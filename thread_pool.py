@@ -47,7 +47,7 @@ class ThreadPool:
             # get all the alive workers
             alive_workers = np.argwhere(self.worker_status).flatten()
             # send a kill signal to all the alive workers
-            for alive_worker in alive_workers:
+            for _ in alive_workers:
                 self.add_task(self.__kill__)
 
 class __KillWorkerException__(Exception):
