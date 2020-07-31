@@ -30,13 +30,13 @@ class ThreadPool:
         till all the tasks in the queue is done.
         """
         self.task_queue.join()
-    
+
     def __kill__(self):
         """ 
         Kill the worker thread
         """
         raise __KillWorkerException__("Kill")
-    
+
     def kill_all_threads(self, wait=True):
         """ Kill all the threads in the pool """
         # wait for the completion of the current tasks in the pool
@@ -47,7 +47,7 @@ class ThreadPool:
             # get all the alive workers
             alive_workers = np.argwhere(self.worker_status).flatten()
             # send a kill signal to all the alive workers
-            for alive_worker in alive_workers:
+            for _ in alive_workers:
                 self.add_task(self.__kill__)
 
 class __KillWorkerException__(Exception):
@@ -68,7 +68,7 @@ class __Worker__(Thread):
         self.status = status
         self.status[self.index] = True  
         self.start()
-        
+
     def run(self):
         _run_ = True
         while _run_:
