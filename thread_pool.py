@@ -37,17 +37,24 @@ class ThreadPool:
         """
         raise __KillWorkerException__("Kill")
 
-    def kill_all_threads(self, wait=True):
+    def empty_task_queue(self):
+        """
+        Remove all the unfinished tasks in the task queue
+        """
+        self.task_queue.queue.clear()
+
+    def kill_all_threads(self):
         """ Kill all the threads in the pool """
         # wait for the completion of the current tasks in the pool
-        if wait:
-            self.wait_completion()
+        self.wait_completion()
         # while there exists at least one worker that is alive
         while np.any(self.worker_status):
             # get all the alive workers
             alive_workers = np.argwhere(self.worker_status).flatten()
             # send a kill signal to all the alive workers
-            for _ in alive_workers:
+            for alive_worker in alive_workers:
+                worker = self.workers[alive_worker]
+                worker._run_ = False
                 self.add_task(self.__kill__)
 
 class __KillWorkerException__(Exception):
@@ -61,6 +68,7 @@ class __Worker__(Thread):
     """
     def __init__(self, task_queue, name, status):
         Thread.__init__(self)
+        self._run_ = True
         self.task_queue = task_queue
         self.index = int(name)
         # indicate to the thread pool that this worker is alive
@@ -69,8 +77,7 @@ class __Worker__(Thread):
         self.start()
 
     def run(self):
-        _run_ = True
-        while _run_:
+        while self._run_:
             # The following statement is a blocking call, i.e.
             # it will block the thread if the task queue is empty
             func, args, kargs = self.task_queue.get()
@@ -80,7 +87,7 @@ class __Worker__(Thread):
             except __KillWorkerException__ as _exception_:
                 # indicate to the thread pool that this worker is dead
                 self.status[self.index] = False
-                _run_ = False
+                self._run_ = False
 
             except Exception as _exception_:
                 print(_exception_)
