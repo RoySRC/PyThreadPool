@@ -1,4 +1,4 @@
-from ThreadPool import ThreadPool
+from thread_pool import ThreadPool
 import time
 
 # Function to be executed by the thread pool

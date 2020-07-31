@@ -2,7 +2,6 @@ from threading import Thread
 from queue import Queue
 import numpy as np
 
-
 class ThreadPool:
     """
     Thread pool containing a pool of worker threads that execute
@@ -49,16 +48,13 @@ class ThreadPool:
             alive_workers = np.argwhere(self.worker_status).flatten()
             # send a kill signal to all the alive workers
             for alive_worker in alive_workers:
-                worker = self.workers[alive_worker]
                 self.add_task(self.__kill__)
 
-                
 class __KillWorkerException__(Exception):
     """
     Exception to kill worker thread
     """
     pass
-
 
 class __Worker__(Thread):
     """ 
@@ -92,4 +88,3 @@ class __Worker__(Thread):
                 
             finally:
                 self.task_queue.task_done()
-
