@@ -32,7 +32,7 @@ class ThreadPool:
         self.task_queue.join()
 
     def __kill__(self):
-        """ 
+        """
         Kill the worker thread
         """
         raise __KillWorkerException__("Kill")
@@ -57,7 +57,7 @@ class __KillWorkerException__(Exception):
     pass
 
 class __Worker__(Thread):
-    """ 
+    """
     Thread executing tasks from a given tasks queue
     """
     def __init__(self, task_queue, name, status):
@@ -66,7 +66,7 @@ class __Worker__(Thread):
         self.index = int(name)
         # indicate to the thread pool that this worker is alive
         self.status = status
-        self.status[self.index] = True  
+        self.status[self.index] = True
         self.start()
 
     def run(self):
@@ -77,14 +77,14 @@ class __Worker__(Thread):
             func, args, kargs = self.task_queue.get()
             try:
                 func(*args, **kargs)
-                
-            except __KillWorkerException__ as e:
+
+            except __KillWorkerException__ as _exception_:
                 # indicate to the thread pool that this worker is dead
                 self.status[self.index] = False
                 _run_ = False
-                    
-            except Exception as e:
-                print(e)
-                
+
+            except Exception as _exception_:
+                print(_exception_)
+
             finally:
                 self.task_queue.task_done()

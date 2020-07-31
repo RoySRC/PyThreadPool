@@ -4,9 +4,9 @@ from thread_pool import ThreadPool
 def sum_function(*args):
 	_sum_ = 0
 	thread = -1
-	for i,arg in enumerate(args):
+	for i, arg in enumerate(args):
 		_sum_ += arg
-		if i+1==len(args):
+		if i+1 == len(args):
 			thread = i
 	print("Thread", thread, "sum:", _sum_)
 
